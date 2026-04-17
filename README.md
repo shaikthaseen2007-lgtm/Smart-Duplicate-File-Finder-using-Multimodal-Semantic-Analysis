@@ -71,7 +71,7 @@ style.css
 ## Installation
 
 1. Clone the repository:
-git clone https://github.com//your-repo-name.git
+git clone https://github.com/shaikthaseen2007-lgtm/Smart-Duplicate-File-Finder-using-Multimodal-Semantic-Analysis
 
 
 2. Navigate to backend:
