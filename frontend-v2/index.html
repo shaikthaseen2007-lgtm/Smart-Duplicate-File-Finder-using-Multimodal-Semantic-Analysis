@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFDF - Smart File Duplicate Finder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">SFDF</div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-view="dashboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item" data-view="upload">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Upload Files
+                </a>
+                <a href="#" class="nav-item" data-view="results">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Duplicate Results
+                </a>
+                <a href="#" class="nav-item" data-view="analytics">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    Analytics & Clusters
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <h1 id="pageTitle">Dashboard</h1>
+                <div class="user-profile">
+                    <div class="avatar">U</div>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <section id="dashboard" class="view-section active">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">Total Files Analyzed</div>
+                        <div class="metric-value" id="totFiles">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Duplicate Groups</div>
+                        <div class="metric-value" id="totGroups">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Storage Savings</div>
+                        <div class="metric-value savings" id="totSavings">0 MB</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Avg Confidence</div>
+                        <div class="metric-value" id="avgConf">0%</div>
+                    </div>
+                </div>
+
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <h3>File Type Distribution</h3>
+                        <div class="chart-placeholder">
+                            <!-- Simulated Chart -->
+                            <div class="sim-bar" style="width: 60%; background: #4f46e5;">PDFs (60%)</div>
+                            <div class="sim-bar" style="width: 25%; background: #ec4899;">Images (25%)</div>
+                            <div class="sim-bar" style="width: 15%; background: #10b981;">Docs (15%)</div>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Processing Performance</h3>
+                        <div class="chart-placeholder flex-center">
+                            <span class="subtle-text">System is running efficiently. BERT enabled.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Upload View -->
+            <section id="upload" class="view-section">
+                <div class="upload-container">
+                    <h2>Upload Documents</h2>
+                    <p class="subtle-text">Supported formats: PDF, DOCX, TXT, Images, Audio</p>
+                    <div class="drop-zone" id="dropZone">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
+                            stroke-width="1.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <p>Drag & Drop files here</p>
+                        <p class="subtle-text">or click to browse</p>
+                        <input type="file" id="fileInput" multiple hidden>
+                    </div>
+                    <button class="btn btn-primary mt-2" id="btnUpload" disabled>Start Analysis</button>
+                    <!-- Progress Area -->
+                    <div id="progressArea" class="hidden mt-2">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <p class="subtle-text text-center mt-1" id="progressText">Analyzing files with BERT & Image
+                            Hashing...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results View -->
+            <section id="results" class="view-section">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h2>Identified Duplicates</h2>
+                        <div class="table-actions">
+                            <input type="text" placeholder="Filter by name..." class="input-text">
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>File Name</th>
+                                <th>Topic</th>
+                                <th>Confidence</th>
+                                <th>Storage Saved</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTableBody">
+                            <tr>
+                                <td colspan="5" class="text-center subtle-text py-2">No data yet. Upload files to
+                                    process.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Analytics View -->
+            <section id="analytics" class="view-section">
+                <div class="cluster-container">
+                    <h2>Cluster Analysis</h2>
+                    <p class="subtle-text">Advanced semantic grouping logic results.</p>
+                    <div id="clusterList" class="mt-2">
+                        <!-- Clusters go here -->
+                        <div class="empty-state text-center py-2 subtle-text">Run analysis first to view clusters.</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
